@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+form.ng-invalid.submitted input.ng-invalid
+{
+    border: red 1px solid;
+}
+
+.gradient
+{
+    background-color: #eff1f2;
+}
