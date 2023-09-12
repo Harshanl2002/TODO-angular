@@ -16,3 +16,29 @@ form.ng-invalid.submitted form.ng-invalid
     border: none;
     outline: none;
 }
+mat-form-field {
+    margin-right: 12px;
+  }
+.checkbox
+{
+    min-width: 3.5vw;
+}
+.logo
+{
+    color: #7eaff8;
+    font-size: 38px;
+    margin-left:1vw ;
+    line-height: normal;
+}
+.row
+{
+    height: 10vh;
+}
+input.cb1
+{
+   padding: 0;
+}
+.wid-20
+{
+    height: 20vh;
+}

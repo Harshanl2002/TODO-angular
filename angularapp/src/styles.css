@@ -8,3 +8,5 @@ form.ng-invalid.submitted input.ng-invalid
 {
     background-color: #eff1f2;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

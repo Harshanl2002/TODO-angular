@@ -17,8 +17,63 @@ router.get('/true',(req,res)=>{
     });
 });
 
+router.get('/truedes',(req,res)=>{
+    Taskmodel.find({done:true}).sort({date:-1}).then((err)=>{
+        if(!err)
+        {
+            console.log("Error:",JSON.stringify(err,undefined,2))
+            
+        }
+        else
+        {
+            res.send(err);   
+        }
+    });
+});
+
+router.get('/',(req,res)=>{
+    Taskmodel.find().sort({date:1}).then((err)=>{
+        if(!err)
+        {
+            console.log("Error:",JSON.stringify(err,undefined,2))
+            
+        }
+        else
+        {
+            res.send(err);   
+        }
+    });
+});
+router.get('/Des',(req,res)=>{
+    Taskmodel.find().sort({date:-1}).then((err)=>{
+        if(!err)
+        {
+            console.log("Error:",JSON.stringify(err,undefined,2))
+            
+        }
+        else
+        {
+            res.send(err);   
+        }
+    });
+});
+
 router.get('/false',(req,res)=>{
     Taskmodel.find({done:false}).sort({date:1}).then((err)=>{
+        if(!err)
+        {
+            console.log("Error:",JSON.stringify(err,undefined,2))
+            
+        }
+        else
+        {
+            res.send(err);   
+        }
+    });
+});
+
+router.get('/falsedes',(req,res)=>{
+    Taskmodel.find({done:false}).sort({date:-1}).then((err)=>{
         if(!err)
         {
             console.log("Error:",JSON.stringify(err,undefined,2))
@@ -58,7 +113,7 @@ router.post('/',(req,res)=>{
     let v=new Taskmodel({
         "Taskname":req.body.Taskname,
         "date":req.body.date,
-        "done":req.body.done
+        "done":false,
     });
     Taskmodel.create(v).then((err)=>{
         if(!err)

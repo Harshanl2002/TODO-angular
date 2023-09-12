@@ -1,30 +1,63 @@
 <div class="container-fluid ">
+    <div class="min-vw-98 d-flex justify-content-center my-4">
+        <input class="form-check-input checkbox" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
+        <p class="logo">TODO List</p>
+    </div>
 <div class="d-block col-12 p-5 ">
-    <form [formGroup]="taskService.TaskForm" (submit)="onSubmit()" [class.submitted]="submitted" >
-        <input type="text" formControlName="Taskname" placeholder="Add Items...">
-        <button type="submit">Add Item</button>
+    <form [formGroup]="taskService.TaskForm" [class.submitted]="submitted" >
+        <div class="pb-2" >
+            <div class="card" >
+              <div class="card-body justify-content-evenly" [class.submitted]="submitted">
+                <div class="d-flex  align-items-center justify-content-evenly" [class.flex-column]="mobileview">
+                  <input type="text" class="form-control form-control-lg mx-2" id="exampleFormControlInput1"
+                    placeholder="Add new..." formControlName="Taskname" [class.my-2]="mobileview" [class.fs-6]="mobileview">
+                    <input type="date" class="form-control form-control-lg mx-2" id="exampleFormControlInput1" formControlName="date" [class.my-2]="mobileview" [class.fs-6]="mobileview">
+                  <div class="d-flex">
+                    <button type="submit" class="btn btn-primary mx-1" (click)="onSubmit()" [class.fs-6]="mobileview">Add</button>
+                    <button type="submit" class="btn btn-primary" (click)="resetTasks()" [class.fs-6]="mobileview"><i class="fa-solid fa-rotate-right"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
     </form>
+    <hr class="my-5">
+    <div class="d-flex justify-content-end align-items-center mb-4 pt-2 pb-3 my-3" [class.d-none]="mobileview">
+        <p class="small mb-0 me-2 text-muted mx-1 text-center" [class.fs-6]="mobileview" [class.fs-5]="!mobileview">Filter</p>
+        <select class="select  my-1" [(ngModel)]="filtersel" [class.fs-6]="mobileview" [class.fs-5]="!mobileview" (change)="filterselfun(filtersel,ordersel)">
+          <option [ngValue]="1">All</option>
+          <option [ngValue]="2">Completed</option>
+          <option [ngValue]="3">Active</option>
+        </select>
+        <p class="small mb-0 ms-4 me-2 text-muted my-1 text-center" [class.fs-6]="mobileview" [class.fs-5]="!mobileview">Sort</p>
+        <select class="select my-1" [(ngModel)]="ordersel" [class.fs-6]="mobileview" [class.fs-5]="!mobileview" (change)="ordersortfun(ordersel,filtersel)" >
+            <option [ngValue]="1">Ascending</option>
+            <option [ngValue]="2">Descending</option>
+        </select>
+        <i class="fas ms-2 text-success my-2" [class.fa-sort-amount-down-alt]="order" [class.fa-sort-amount-up-alt]="!order" [class.fs-6]="mobileview" [class.fs-5]="!mobileview"></i>
+      </div>
+    <div [class.d-none]="!mobileview">
+        <label>Filter</label>
+        <select class="select  my-1" [(ngModel)]="filtersel" [class.fs-6]="mobileview" [class.fs-5]="!mobileview" (change)="filterselfun(filtersel,ordersel)">
+            <option [ngValue]="1">All</option>
+            <option [ngValue]="2">Completed</option>
+            <option [ngValue]="3">Active</option>
+          </select>
+      <i class="fas ms-2 text-success my-2 fs-6" [class.fa-sort-amount-down-alt]="order" [class.fa-sort-amount-up-alt]="!order" (click)="oc(order)" ></i>
+    </div>
 </div>
-<div class="col-6 ">
-    <ul>
-        <h1>Not Finished Tasks</h1>
-        <li *ngFor="let l of NotFinishedlist">
-            <div>
-                <p (click)="ClicktoEdit(l)" style="cursor: pointer;">{{l.Taskname}}</p>
-                <p>{{l.date|date:'dd/MM/yyyy'}}</p>
-                <p>{{l.done}}</p>
-                <button (click)="deletetask(l)">Delete</button>
-            </div>
-        </li>
-        <h1>Finished Tasks</h1>
-        <li *ngFor="let l of Finishedlist">
-            <div>
-                <p (click)="ClicktoEdit(l)" style="cursor: pointer;">{{l.Taskname}}</p>
-                <p>{{l.date|date:'dd/MM/yyyy'}}</p>
-                <p>{{l.done}}</p>
-                <button (click)="deletetask(l)">Delete</button>
-            </div>
-        </li>
-    </ul>
+<div class="container  ">
+    <tr class="row" [class.d-none]="mobileview">
+        <th class="col-1 fs-4 fw-bolder text-end ">Done</th>
+        <th class="col-7 fs-4 fw-bolder  ">Task</th>
+        <th class="col-2 fs-4 fw-bolder text-center text-wrap">Due Date</th>
+        <th class="col-2 fs-4 fw-bolder text-center ">Options</th>
+    </tr>
+    <tr class="row " *ngFor="let l of list" [class.wid-20]="mobileview">
+        <td class="text-end " [class.col-2]="mobileview" [class.col-1]="!mobileview" [class.fs-6]="mobileview" [class.fs-5]="!mobileview"><input type="checkbox" class="form-check-input cb1" (click)="editTrue(l)" [checked]="l.done"></td>
+        <td class="text-wrap " [class.col-10]="mobileview" [class.col-7]="!mobileview" [class.fs-6]="mobileview" [class.fs-5]="!mobileview">{{l.Taskname}}</td>
+        <td class="text-center " [class.col-6]="mobileview" [class.col-2]="!mobileview" [class.fs-6]="mobileview" [class.fs-5]="!mobileview">{{dateModifier(l)}}</td>
+        <td class="text-center justify-content-evenly " [class.col-6]="mobileview" [class.col-2]="!mobileview" [class.fs-6]="mobileview" [class.fs-5]="!mobileview"><button class="btn btn-success mx-1" (click)="ClicktoEdit(l)"><i class="fa-solid fa-pencil"></i></button><button class="btn btn-danger " (click)="deletetask(l)"><i class="fa-regular fa-trash-can"></i></button></td>
+    </tr>
 </div>
 </div>
